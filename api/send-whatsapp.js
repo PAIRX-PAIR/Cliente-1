@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
 
   try {
     await client.messages.create({
-      from: 'whatsapp:+14155238886', // número sandbox de Twilio
+      from: 'whatsapp:+17372508034', // número sandbox de tu cuenta Twilio
       to: `whatsapp:${telefono}`,
       body: `MediAdhi: confirmaste la toma de ${medicamento}. Registro guardado.`
     });
