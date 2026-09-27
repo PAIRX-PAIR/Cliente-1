@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediAdhi — Tu tratamiento, a tiempo</title>
+<meta name="description" content="MediAdhi es una solución digital para apoyar la adherencia a tratamientos farmacológicos crónicos, pensada como puente entre el afiliado y la EPS.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F2E9;
+    --bg-alt:#EDE6D6;
+    --panel:#FBF9F4;
+    --ink:#1E2B27;
+    --ink-soft:#56635C;
+    --accent:#2E6B5A;
+    --accent-deep:#1F4A3F;
+    --accent-soft:#DCE7DF;
+    --line:#D9CFB8;
+    --warn:#B85C3E;
+    --warn-soft:#F1DFD5;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Work Sans",-apple-system,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+  }
+  h1,h2,h3{
+    font-family:"Fraunces",Georgia,serif;
+    font-weight:500;
+    color:var(--ink);
+    margin:0;
+  }
+  p{margin:0;}
+  a{color:inherit;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 1.75rem;}
+  .measure{max-width:62ch;}
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:sticky;top:0;z-index:20;
+    background:rgba(246,242,233,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1040px;margin:0 auto;padding:0 1.75rem;
+    height:64px;display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{
+    font-family:"Fraunces",serif;font-size:1.25rem;font-weight:500;
+    letter-spacing:-0.01em;
+  }
+  .nav-links{display:flex;gap:2rem;list-style:none;margin:0;padding:0;}
+  .nav-links a{
+    text-decoration:none;font-size:0.92rem;color:var(--ink-soft);
+    transition:color .15s ease;
+  }
+  .nav-links a:hover{color:var(--accent-deep);}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:0.4rem;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;}
+
+  /* ---------- Hero ---------- */
+  header.hero{padding:5.5rem 0 4rem;}
+  .hero-eyebrow{
+    color:var(--accent-deep);font-size:0.95rem;font-weight:600;
+    margin-bottom:1.1rem;opacity:0;animation:rise .7s ease forwards;
+  }
+  h1.hero-title{
+    font-size:clamp(2.4rem,5vw,3.6rem);
+    line-height:1.08;letter-spacing:-0.01em;
+    max-width:16ch;
+    opacity:0;animation:rise .7s ease .08s forwards;
+  }
+  .hero-sub{
+    margin-top:1.4rem;font-size:1.15rem;color:var(--ink-soft);
+    max-width:52ch;
+    opacity:0;animation:rise .7s ease .16s forwards;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  @media (prefers-reduced-motion:reduce){
+    .hero-eyebrow,h1.hero-title,.hero-sub{animation:none;opacity:1;}
+  }
+
+  .stat-strip{
+    margin-top:3rem;display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--line);
+  }
+  .stat{padding:1.4rem 1.6rem 0 0;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat b{
+    display:block;font-family:"Fraunces",serif;font-weight:500;
+    font-size:2.1rem;color:var(--accent-deep);line-height:1;
+  }
+  .stat span{display:block;margin-top:0.5rem;font-size:0.9rem;color:var(--ink-soft);}
+
+  /* ---------- Sections ---------- */
+  section{padding:4.5rem 0;border-top:1px solid var(--line);}
+  section.alt{background:var(--bg-alt);}
+  .section-label{
+    font-size:0.9rem;color:var(--accent-deep);font-weight:600;margin-bottom:0.9rem;
+  }
+  h2.section-title{font-size:clamp(1.6rem,3vw,2.1rem);max-width:20ch;margin-bottom:1.4rem;}
+  .lede{font-size:1.05rem;color:var(--ink-soft);max-width:60ch;margin-bottom:1.8rem;}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+
+  .quote-block{
+    border-left:2px solid var(--accent);
+    padding-left:1.4rem;margin:1.8rem 0;color:var(--ink-soft);font-size:1rem;
+  }
+
+  /* ---------- Flow chain (alianzas) ---------- */
+  .chain{
+    display:flex;flex-wrap:wrap;align-items:center;gap:0;margin-top:2rem;
+  }
+  .chain-node{
+    background:var(--panel);border:1px solid var(--line);
+    padding:0.9rem 1.2rem;font-size:0.95rem;border-radius:2px;
+  }
+  .chain-arrow{
+    color:var(--ink-soft);padding:0 0.7rem;font-size:1.1rem;
+  }
+
+  /* ---------- Value grid ---------- */
+  .value-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    border-top:1px solid var(--line);border-left:1px solid var(--line);
+    margin-top:1rem;
+  }
+  .value-cell{
+    padding:1.6rem;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .value-cell h3{font-size:1.05rem;margin-bottom:0.5rem;}
+  .value-cell p{color:var(--ink-soft);font-size:0.96rem;}
+
+  /* ---------- Risk table ---------- */
+  table{width:100%;border-collapse:collapse;margin-top:1.5rem;font-size:0.92rem;}
+  th,td{text-align:left;padding:0.75rem 0.9rem;border-bottom:1px solid var(--line);}
+  th{color:var(--ink-soft);font-weight:600;font-size:0.82rem;}
+  td.priority-high{color:var(--warn);font-weight:600;}
+  .table-scroll{overflow-x:auto;}
+
+  /* ---------- Journey list ---------- */
+  .journey{margin-top:2rem;}
+  .journey-item{
+    display:grid;grid-template-columns:2.4rem 1fr;gap:1rem;
+    padding:1.1rem 0;border-top:1px solid var(--line);
+  }
+  .journey-item:last-child{border-bottom:1px solid var(--line);}
+  .journey-num{font-family:"Fraunces",serif;color:var(--accent-deep);font-size:1.1rem;}
+  .journey-item h3{font-size:1.02rem;margin-bottom:0.3rem;}
+  .journey-item p{color:var(--ink-soft);font-size:0.95rem;}
+
+  /* ---------- Demo form ---------- */
+  .demo-form{max-width:420px;margin-top:1.8rem;display:flex;flex-direction:column;gap:1.1rem;}
+  .demo-form label{
+    display:flex;flex-direction:column;gap:0.4rem;font-size:0.9rem;color:var(--ink-soft);
+  }
+  .demo-form input{
+    font-family:inherit;font-size:1rem;padding:0.7rem 0.85rem;
+    border:1px solid var(--line);border-radius:2px;background:var(--panel);color:var(--ink);
+  }
+  .demo-form input:focus{border-color:var(--accent);}
+  .btn-demo{
+    align-self:flex-start;padding:0.8rem 1.5rem;background:var(--accent);color:#fff;
+    border:none;border-radius:2px;font-weight:600;font-size:0.95rem;cursor:pointer;
+    transition:background .15s ease;
+  }
+  .btn-demo:hover{background:var(--accent-deep);}
+  .btn-demo:disabled{opacity:0.6;cursor:not-allowed;}
+  .demo-status{font-size:0.9rem;color:var(--accent-deep);min-height:1.2em;}
+
+  /* ---------- CTA / footer ---------- */
+  .cta{
+    background:var(--accent-deep);color:#F4F1E8;padding:4rem 0;
+  }
+  .cta h2{color:#F4F1E8;}
+  .cta .lede{color:#C9D8CF;}
+  .btn{
+    display:inline-block;margin-top:1.6rem;padding:0.85rem 1.6rem;
+    background:#F4F1E8;color:var(--accent-deep);text-decoration:none;
+    font-weight:600;border-radius:2px;font-size:0.95rem;
+  }
+  footer{padding:2.4rem 0;font-size:0.85rem;color:var(--ink-soft);}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:760px){
+    .nav-links{
+      position:absolute;top:64px;left:0;right:0;background:var(--bg);
+      flex-direction:column;gap:0;border-bottom:1px solid var(--line);
+      display:none;
+    }
+    .nav-links.open{display:flex;}
+    .nav-links a{padding:1rem 1.75rem;width:100%;border-top:1px solid var(--line);}
+    .nav-toggle{display:block;}
+    .stat-strip{grid-template-columns:1fr;}
+    .stat{border-right:none;border-bottom:1px solid var(--line);padding:1.2rem 0;}
+    .two-col{grid-template-columns:1fr;gap:1.5rem;}
+    .value-grid{grid-template-columns:1fr;}
+    .value-cell{border-right:none;}
+  }
+
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="logo">MediAdhi</span>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#problema">Problema</a></li>
+      <li><a href="#solucion">Solución</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#valor">Valor</a></li>
+      <li><a href="#riesgos">Riesgos</a></li>
+      <li><a href="#alianzas">Alianzas</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="hero-eyebrow">Proyecto integrador · Gestión Empresarial</p>
+    <h1 class="hero-title">Tu tratamiento, a tiempo.</h1>
+    <p class="hero-sub">MediAdhi acompaña a personas con hipertensión y diabetes a sostener su tratamiento día a día, y conecta esa rutina con la gestión de acompañamiento de su EPS.</p>
+
+    <div class="stat-strip">
+      <div class="stat">
+        <b>51%</b>
+        <span>Cumplimiento farmacológico estimado en hipertensión arterial en Colombia (Cáceres et al., 2023)</span>
+      </div>
+      <div class="stat">
+        <b>5.658</b>
+        <span>Pacientes colombianos analizados en el metaanálisis que sustenta el problema</span>
+      </div>
+      <div class="stat">
+        <b>2</b>
+        <span>Lados del mismo puente: el afiliado que necesita organizarse y la EPS que necesita acompañar</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="problema">
+  <div class="wrap">
+    <p class="section-label">El problema</p>
+    <h2 class="section-title">Recibir la fórmula no garantiza sostener el tratamiento</h2>
+    <div class="two-col">
+      <p class="lede">Un afiliado con hipertensión o diabetes puede tener varios medicamentos, con horarios distintos, dentro de una rutina que incluye trabajo, familia y desplazamientos. En ese contexto una toma se olvida, se retrasa o se confunde — no por falta de responsabilidad, sino porque la adherencia depende de múltiples factores: la persona, el tratamiento, el sistema de salud y su entorno.</p>
+      <div>
+        <p class="lede" style="margin-bottom:0;">Para la EPS, esto no es solo un problema del paciente: es un desafío de gestión. Garantizar la prescripción y la dispensación no es suficiente si no hay continuidad después de la entrega del medicamento.</p>
+        <div class="quote-block">
+          ¿Cómo puede una EPS apoyar de manera más cercana la continuidad de los tratamientos de sus afiliados, con una herramienta digital que también sea útil para el propio paciente?
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="evidencia">
+  <div class="wrap">
+    <p class="section-label">La evidencia</p>
+    <h2 class="section-title">Un desafío documentado, no una percepción</h2>
+    <p class="lede">Cáceres et al. (2023) revisaron 14 estudios y 5.658 pacientes colombianos con enfermedades crónicas no transmisibles: el cumplimiento global fue del 59%, con 51% en hipertensión arterial y 79% en diabetes mellitus. En paralelo, el Ministerio de Salud avanza desde 2026 hacia la interoperabilidad del seguimiento a medicamentos — prescripción, direccionamiento, programación y entrega —, lo que abre espacio para que una herramienta como MediAdhi complemente justamente el momento posterior: lo que sucede después de que el paciente recibe el medicamento.</p>
+  </div>
+</section>
+
+<section id="solucion">
+  <div class="wrap">
+    <p class="section-label">Nuestra propuesta</p>
+    <h2 class="section-title">Recordar, confirmar, dar seguimiento</h2>
+    <div class="two-col">
+      <div>
+        <p class="lede">MediAdhi permite registrar medicamentos, definir horarios y recibir recordatorios claros. Al llegar el momento programado, el afiliado confirma con "Ya lo tomé", generando un historial consultable. La aplicación también admite registrar presión arterial y glucosa según las indicaciones recibidas, y organiza el cumplimiento en periodos de seguimiento — no para calificar al paciente, sino para que reconozca su propio comportamiento.</p>
+      </div>
+      <div>
+        <p class="lede">En una fase posterior, y siempre bajo autorización y protección de datos, la EPS podría acceder a indicadores agregados de adherencia de sus afiliados, sin sustituir la valoración clínica. La integración evoluciona por etapas:</p>
+        <div class="chain" style="margin-top:1.2rem;">
+          <span class="chain-node">EPS</span><span class="chain-arrow">→</span>
+          <span class="chain-node">MediAdhi</span><span class="chain-arrow">→</span>
+          <span class="chain-node">Afiliado</span>
+        </div>
+        <div class="chain" style="margin-top:0.6rem;">
+          <span class="chain-node">EPS</span><span class="chain-arrow">↔</span>
+          <span class="chain-node">MediAdhi</span><span class="chain-arrow">↔</span>
+          <span class="chain-node">IPS / gestores farmacéuticos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <p class="section-label">Demo interactiva</p>
+    <h2 class="section-title">Así se confirma una toma en MediAdhi</h2>
+    <p class="lede">Ingresa un número de WhatsApp propio y confirma la toma como lo haría un afiliado. El mensaje se envía de verdad a través del sandbox de Twilio — necesitas unir tu número al sandbox antes de probarlo (ver instrucciones de despliegue).</p>
+    <form id="demoForm" class="demo-form">
+      <label>Medicamento
+        <input type="text" id="medInput" value="Losartán 50mg" required>
+      </label>
+      <label>Tu WhatsApp (formato +573001234567)
+        <input type="tel" id="phoneInput" placeholder="+573001234567" required>
+      </label>
+      <button type="submit" class="btn-demo">Ya lo tomé</button>
+      <p id="demoStatus" class="demo-status" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<section class="alt" id="innovacion">
+  <div class="wrap">
+    <p class="section-label">La innovación</p>
+    <h2 class="section-title">No es la app, es el puente institucional</h2>
+    <p class="lede">Existen ya alarmas, agendas, pastilleros y aplicaciones de recordatorio de medicamentos. La innovación de MediAdhi no está en agregar una más, sino en cambiar la pregunta: en lugar de "¿cómo recordamos tomar el medicamento?", proponemos "¿cómo apoya una EPS la continuidad del tratamiento de sus afiliados, mientras el paciente recibe una herramienta simple para su vida diaria?". Esto convierte la aplicación en un modelo de gestión, diseñado desde el inicio bajo los principios de interoperabilidad segura de la Ley 2015 de 2020.</p>
+  </div>
+</section>
+
+<section id="valor">
+  <div class="wrap">
+    <p class="section-label">Valor generado</p>
+    <h2 class="section-title">Un valor distinto para cada actor</h2>
+    <div class="value-grid">
+      <div class="value-cell">
+        <h3>Para el afiliado</h3>
+        <p>Menos dependencia de la memoria, confirmación de cada toma y un historial que ayuda a reconocer patrones de cumplimiento.</p>
+      </div>
+      <div class="value-cell">
+        <h3>Para la EPS</h3>
+        <p>Información para fortalecer programas de riesgo cardiovascular y metabólico, y orientar acompañamiento adicional donde se necesite.</p>
+      </div>
+      <div class="value-cell">
+        <h3>Para la red de salud</h3>
+        <p>Un puente entre la información de prescripción/dispensación y el uso real registrado por el paciente, evitando procesos aislados.</p>
+      </div>
+      <div class="value-cell">
+        <h3>Modelo económico</h3>
+        <p>Un esquema B2B2C: la EPS como cliente institucional que contrata la solución para sus afiliados, no una venta directa al paciente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="riesgos">
+  <div class="wrap">
+    <p class="section-label">Riesgos</p>
+    <h2 class="section-title">Los riesgos cambian cuando el cliente es institucional</h2>
+    <p class="lede">Al orientarse hacia la EPS, el proyecto ya no depende solo de que la app funcione: depende de adopción, integración, protección de datos y sostenibilidad.</p>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Riesgo</th><th>Probabilidad</th><th>Impacto</th><th>Prioridad</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Baja utilización constante por parte de los afiliados</td><td>Alta</td><td>Alto</td><td class="priority-high">Muy alta</td></tr>
+          <tr><td>Manejo inadecuado de datos personales y de salud</td><td>Media</td><td>Muy alto</td><td class="priority-high">Muy alta</td></tr>
+          <tr><td>Fallas en alarmas o funcionamiento de la aplicación</td><td>Media</td><td>Alto</td><td>Alta</td></tr>
+          <tr><td>Dificultad para integrar MediAdhi con sistemas de la EPS</td><td>Media</td><td>Alto</td><td>Alta</td></tr>
+          <tr><td>Resistencia institucional a adoptar una nueva herramienta</td><td>Media</td><td>Alto</td><td>Alta</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="alianzas">
+  <div class="wrap">
+    <p class="section-label">Alianzas estratégicas</p>
+    <h2 class="section-title">Ningún actor trabaja aislado</h2>
+    <p class="lede">La EPS es la alianza principal: articula la relación con los afiliados y valida el modelo de seguimiento. Alrededor de ella se organiza una red de actores complementarios.</p>
+    <div class="journey">
+      <div class="journey-item">
+        <span class="journey-num">01</span>
+        <div><h3>EPS</h3><p>Articulador principal: selecciona población objetivo, define indicadores y valida el piloto.</p></div>
+      </div>
+      <div class="journey-item">
+        <span class="journey-num">02</span>
+        <div><h3>MediAdhi</h3><p>Solución digital que conecta la rutina del afiliado con la gestión institucional.</p></div>
+      </div>
+      <div class="journey-item">
+        <span class="journey-num">03</span>
+        <div><h3>Afiliado</h3><p>Usuario final, centro de la propuesta.</p></div>
+      </div>
+      <div class="journey-item">
+        <span class="journey-num">04</span>
+        <div><h3>IPS y gestores farmacéuticos</h3><p>Actores complementarios en atención clínica y dispensación, bajo autorización.</p></div>
+      </div>
+      <div class="journey-item">
+        <span class="journey-num">05</span>
+        <div><h3>Universidad</h3><p>Apoyo en investigación, validación del prototipo y diseño del piloto.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contacto">
+  <div class="wrap">
+    <p class="section-label" style="color:#9FC2AF;">Nuestra oportunidad</p>
+    <h2>Un puente que debe validarse con evidencia</h2>
+    <p class="lede">La primera etapa se plantea con un grupo reducido de afiliados con hipertensión y/o diabetes, midiendo utilización, cumplimiento de recordatorios y percepción de utilidad, antes de avanzar hacia un piloto institucional con una EPS.</p>
+    <a class="btn" href="mailto:equipo@mediadhi.co">Hablemos del piloto</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>MediAdhi · Proyecto integrador, Gestión Empresarial</span>
+    <span>Cáceres et al. (2023) · Ley 2015 de 2020 · MinSalud (2026)</span>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Reemplaza esta URL por la de tu función desplegada en Vercel.
+  const WHATSAPP_ENDPOINT = 'https://TU-PROYECTO.vercel.app/api/send-whatsapp';
+
+  const demoForm = document.getElementById('demoForm');
+  if (demoForm) {
+    demoForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = document.getElementById('demoStatus');
+      const btn = demoForm.querySelector('button');
+      btn.disabled = true;
+      status.textContent = 'Enviando…';
+      try {
+        const res = await fetch(WHATSAPP_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            medicamento: document.getElementById('medInput').value,
+            telefono: document.getElementById('phoneInput').value
+          })
+        });
+        const data = await res.json();
+        status.textContent = res.ok
+          ? 'Notificación enviada a tu WhatsApp.'
+          : (data.error || 'No se pudo enviar la notificación.');
+      } catch (err) {
+        status.textContent = 'No se pudo conectar con el servidor.';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
